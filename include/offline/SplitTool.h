@@ -14,16 +14,17 @@ class Configuration;
 class SplitTool
 {
 public:
-    SplitTool();
-    virtual ~SplitTool();
+    SplitTool() = default;
+    virtual ~SplitTool() = default;
     virtual vector<string> cut(const string &sentence) = 0;
 };
 
-class SplitToolCppJiaba : public SplitTool {
+
+class SplitToolCppJiaba : public SplitTool{
 public:
     SplitToolCppJiaba();
-    virtual ~SplitToolCppJiaba();
-    virtual vector<string> cut(const string &sentence) override;
+    ~SplitToolCppJiaba() = default;
+    vector<string> cut(const string &sentence);
 
 private:
     //Configuration &_conf;
