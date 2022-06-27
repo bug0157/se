@@ -6,6 +6,7 @@
 #include "../../include/offline/DictProducer.h"
 
 using namespace tinyxml2;
+using std::ofstream;
 
 DictProducer::DictProducer(SplitTool *tool)
 : _record()
@@ -50,7 +51,16 @@ void DictProducer::buildCnDict(){
     }
 }
 
-
+void DictProducer::storeDict(const char *filepath){
+    ofstream ofs(filepath);
+    if (!ofs.good()) {
+        perror("file open error");
+        return;
+    }
+    for (auto &iter : _dict) {
+        ofs << iter.first << " " << iter.second << std::endl;
+    }
+}
 
 // for test
 void DictProducer::showDict() const{

@@ -22,12 +22,12 @@ public:
 
 class SplitToolCppJiaba : public SplitTool{
 public:
-    SplitToolCppJiaba();
+    SplitToolCppJiaba(Configuration *conf);
     ~SplitToolCppJiaba() = default;
     vector<string> cut(const string &sentence);
 
 private:
-    //Configuration &_conf;
+    Configuration *_conf;
     cppjieba::Jieba _jieba;
 };
 #endif // !SE_INCLUDE_OFFICE_SPLITTOOL_H_
