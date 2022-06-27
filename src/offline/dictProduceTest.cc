@@ -10,8 +10,8 @@ void test(){
     dp1.storeIndex("../../data/dict/index.dat");
 }
 
-int main (int argc, char *argv[])
+/* int main (int argc, char *argv[])
 {
     test();
     return 0;
-}
+} */
