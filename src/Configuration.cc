@@ -54,14 +54,18 @@ void Configuration::stopWordsInit(){
     } 
     ifs.seekg(std::ios_base::beg);
     string words;
+    _stopWords.clear();
     while (getline(ifs, words)) {
-        _stopWords.insert(words);
+        //std::cout << words << std::endl;
+        _stopWords.emplace(words);
     }
+    //std::cout << "读完停用词" << std::endl;
 
-#if 1
-    for (auto &it : _stopWords) {
-        std::cout << it << std::endl;  
+#if 0
+    for (auto it = _stopWords.begin(); it != _stopWords.end(); ++it) {
+        std::cout << *it << std::endl;  
     }
+    std::cout << "存储完停用词" << std::endl;
 #endif
 
     ifs.close();

@@ -25,8 +25,9 @@ public:
     void storeDict(const char * filepath);
     void storeIndex(const char * filepath);
 
-    void showFiles() const;               //查看文件路径，测试用
+    //void showFiles() const;               //查看文件路径，测试用
     void showDict() const;                //查看词典，测试用
+    void showIndex() const;
     void getFiles();                      //获取文件的绝对路径
     void pushDict(const string &word);    //存储某个单词
 private:
