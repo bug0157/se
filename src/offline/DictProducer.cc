@@ -29,7 +29,7 @@ void DictProducer::buildCnDict(){
     string sentence;
     while (item) {
         //获取标题
-        XMLElement *item_title = item->FirstChildElement("title");
+        //XMLElement *item_title = item->FirstChildElement("title");
         //获取内容
         XMLElement *item_content = item->FirstChildElement("description");
         string fragment = item_content->GetText();
