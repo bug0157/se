@@ -11,14 +11,14 @@ Configuration* Configuration::_pInstance = nullptr;
 pthread_once_t Configuration::_once = PTHREAD_ONCE_INIT;
 
 Configuration* Configuration::getInstance(){
-    std::cout << "Configuration::getInstance()" << std::endl;  
+    //std::cout << "Configuration::getInstance()" << std::endl;  
     pthread_once(&_once, init);
     return _pInstance;
 }
 
 //初始化单例对象，注册回收函数
 void Configuration::init(){
-    std::cout << "Configuration::init()" << std::endl;  
+    //std::cout << "Configuration::init()" << std::endl;  
     if (_pInstance == nullptr) {
         _pInstance = new Configuration();
         atexit(Configuration::destory);
@@ -26,7 +26,7 @@ void Configuration::init(){
 }
 
 void Configuration::destory(){
-    std::cout << "Configuration::destory()" << std::endl;  
+    //std::cout << "Configuration::destory()" << std::endl;  
     if (_pInstance == nullptr) {
         return; 
     }
@@ -35,7 +35,7 @@ void Configuration::destory(){
 }
 
 Configuration::Configuration(){
-    std::cout << "Configuration::Configuration" << std::endl;  
+    //std::cout << "Configuration::Configuration" << std::endl;  
     //初始化停用词
     stopWordsInit();
 }
@@ -45,8 +45,8 @@ unordered_set<string> &Configuration::getStopWords(){
 }
 
 void Configuration::stopWordsInit(){
-    std::cout << "Configuration::stopWordsInit()" << std::endl;  
-    string file = "/home/rootless/se/data/stopwords/stop_words_cn.utf8";
+    //std::cout << "Configuration::stopWordsInit()" << std::endl;  
+    string file = "/home/metaphysic/se/data/stopwords/stop_words_zh.txt";
     ifstream ifs(file);
     if (!ifs.is_open()) {
         perror("ifs open failed");

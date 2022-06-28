@@ -27,7 +27,7 @@ vector<string> SplitToolCppJiaba::cut(const string &sentence){
     //去除停用词
     //通过配置类调用停用词文件路径
     unordered_set<string> stop_words = _conf->getStopWords();
-    std::cout << "stop_words:" <<stop_words.size() << std::endl;
+    //std::cout << "stop_words:" <<stop_words.size() << std::endl;
     vector<string> temp;
     int cnt = 0;
     for (auto &iter : allWords) {

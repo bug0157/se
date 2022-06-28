@@ -1,5 +1,5 @@
-#ifndef __WEBPAGE_HPP__
-#define __WEBPAGE_HPP__
+#ifndef SE_INCLUDE_OFFLINE_WEBPAGE_H_
+#define SE_INCLUDE_OFFLINE_WEBPAGE_H_
 
 
 #include "../../include/offline/tinyxml2.h"
@@ -49,4 +49,4 @@ private:
 
 
 
-#endif
+#endif //!SE_INCLUDE_OFFLINE_WEBPAGE_H_
