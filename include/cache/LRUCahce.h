@@ -13,7 +13,7 @@ using std::list;
 
 class LRUCache{
 public:
-    LRUCache(int num = 5);
+    LRUCache(int num = 30);
     LRUCache(const LRUCache &cache);
 
     struct Node{

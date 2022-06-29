@@ -1,8 +1,8 @@
-#ifndef SE_INCLUDE_OFFICE_PAGELIBPREPEOCESSOR_H_
-#define SE_INCLUDE_OFFICE_PAGELIBPREPEOCESSOR_H_
+#ifndef SE_INCLUDE_OFFICE_PAGELIBPREPROCESSOR_H_
+#define SE_INCLUDE_OFFICE_PAGELIBPREPROCESSOR_H_
 
-#include "../../lib/simhash/Simhasher.hpp"
-#include "../../lib/simhash/cppjieba/Jieba.hpp"
+#include "../../lib/simhash-master/include/simhash/Simhasher.hpp"
+#include "../../lib/simhash-master/deps/cppjieba/Jieba.hpp"
 
 #include "../../include/offline/WebPage.h"
 
@@ -13,12 +13,24 @@ using TFMap = vector<unordered_map<string, int>>;
 class PageLibPreProcessor{
 public:
     PageLibPreProcessor();
-    void doProcess();              //执行预处理
+    //void doProcess();              //执行预处理
 
     void readInfoFromFile();       //读取网页库和偏移库；
     void cutRedundantPages();      //去重
     void buildInvertIndexTable();  //创建倒排索引
-    void storeOnDisk();            //存储到磁盘上
+    //void storeOnDisk();            //存储到磁盘上
+    //for test
+    void showSize() { cout << "newPagelib size:" << _newPageLib.size() << endl; }
+    void showIndex(){
+        for (auto &map_it : _invertIndexTable) {
+            cout << map_it.first << " ";
+            for (auto &set_it : map_it.second) {
+                cout << set_it.first << " "
+                     << set_it.second << " ";
+            }
+            cout << endl;
+        }
+    }
 
 private:
 
@@ -40,4 +52,4 @@ private:
 
 
 
-#endif // !SE_INCLUDE_OFFICE_PAGELIBPREPEOCESSOR_H_
+#endif // !SE_INCLUDE_OFFICE_PAGELIBPREPROCESSER_H_

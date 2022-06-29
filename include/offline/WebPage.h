@@ -17,9 +17,11 @@
 using namespace std;
 using namespace tinyxml2;
 
+class SplitTool;
+
 class WebPage{
 public:
-    WebPage(string&);//传入newpage中的一整行doc内容
+    WebPage(string& doc);//传入newpage中的一整行doc内容
     ~WebPage();
 
     int getDocId();//获取文档id
@@ -36,6 +38,7 @@ public:
     
 
 private:
+    SplitTool *_tool;
     string _doc;//整篇文档
     int _docId;//文档id
     string _docTitle;//文档标题

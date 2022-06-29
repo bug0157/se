@@ -46,7 +46,7 @@ unordered_set<string> &Configuration::getStopWords(){
 
 void Configuration::stopWordsInit(){
     //std::cout << "Configuration::stopWordsInit()" << std::endl;  
-    string file = "/home/metaphysic/se/data/stopwords/stop_words_zh.txt";
+    string file = "/home/metaphysic/se/data/stopwords/stop_words_cn.utf8";
     ifstream ifs(file);
     if (!ifs.is_open()) {
         perror("ifs open failed");

@@ -5,9 +5,9 @@
 
 
 WebPage::WebPage(string& doc)
-:_doc(doc){
+: _doc(doc){
     ProcessDoc();
-    WordsHandle();
+    //WordsHandle();
 }
 
 WebPage::~WebPage(){}
@@ -46,16 +46,19 @@ void WebPage::ProcessDoc(){
     _docId = atoi(root->FirstChildElement("docid")->GetText());
     _docURL = root->FirstChildElement("url")->GetText();
     _docTitle = root->FirstChildElement("title")->GetText();
-    _docContent = root->FirstChildElement("content")->GetText();
-
+    const char* temp = root->FirstChildElement("content")->GetText();
+    if(temp!=0){
+        _docContent = temp;
+    }  
+    else{
+        string s(" ");
+        _docContent = s;
+    }
 }
 
 
 void WebPage::WordsHandle(){
-    Configuration* conf = Configuration::getInstance();
-    SplitTool* cutter = new SplitToolCppJiaba(conf); 
-
-    vector<string> vec = cutter->cut(_docContent);
+    vector<string> vec = _tool->cut(_docContent);
 
     for(vector<string>::iterator it = vec.begin();
             it!=vec.end();++it){

@@ -1,8 +1,18 @@
 #include "../../include/offline/PageLibPreprocessor.h"
 
+const char* const S_DICT_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/jieba.dict.utf8";
+const char* const S_HMM_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/hmm_model.utf8";
+const char* const S_USER_DICT_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/user.dict.utf8";
+const char* const S_IDF_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/idf.utf8";
+const char* const S_STOP_WORD_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/stop_words.utf8";
+
+PageLibPreProcessor::PageLibPreProcessor()
+: _jieba(S_DICT_PATH, S_HMM_PATH, S_USER_DICT_PATH)
+, _simhasher(S_DICT_PATH, S_HMM_PATH, S_IDF_PATH, S_STOP_WORD_PATH){
+}
 
 void PageLibPreProcessor::readInfoFromFile(){
-    string pagelib_path = "";
+    string pagelib_path = "/home/metaphysic/se/data/pagelib/page.lib";
     string offsetlib = "";
     ifstream ifs(pagelib_path);
     if (!ifs.is_open()) {
@@ -15,9 +25,11 @@ void PageLibPreProcessor::readInfoFromFile(){
         WebPage web(temp);
         _pageLib.push_back(web);
     }
+    cout << "doc sum: " << _pageLib.size() << endl;
 }
 
 void PageLibPreProcessor::cutRedundantPages(){
+    printf("开始去重\n");
     vector<pair<string, double>> res;
     size_t topN = 5, docID = 0;
     uint64_t u64 = 0;
@@ -28,16 +40,16 @@ void PageLibPreProcessor::cutRedundantPages(){
         for (i = 0; i < _simhashValue.size(); ++ i){
             if (Simhasher::isEqual(_simhashValue[i], u64) == 1)
                 break;
-            if (i == _simhashValue.size()){
-                _simhashValue.push_back(u64); 
-                _newPageLib.push_back(_pageLib[idx]);
-            }
+        }
+        if (i == _simhashValue.size()){
+            _simhashValue.push_back(u64); 
+            _newPageLib.push_back(_pageLib[idx]);
         }
     }
 }
 
 void PageLibPreProcessor::buildInvertIndexTable(){
-    ifstream ifsStopWords("STOP_WORD_PATH");
+    ifstream ifsStopWords(S_STOP_WORD_PATH);
     unordered_set<string> stopWords;
     vector<string> tmpWords;
     string stopWord, tmpWord;
@@ -95,3 +107,8 @@ void PageLibPreProcessor::buildInvertIndexTable(){
     }
 }
 
+/* void PageLibPreProcessor::storeOnDisk(){
+    string pagelib_path = "";
+    string offsetlib = "";
+
+} */
