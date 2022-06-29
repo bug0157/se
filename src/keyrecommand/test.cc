@@ -2,10 +2,15 @@
 
 void test1()
 {
-    string query = "计算机";
-    KeyRecommander key(query);
-    key.execute();
-    key.response();
+    while (1)
+    {
+        string query;
+        std::cout << "pls input key:";
+        std::cin >> query;
+        KeyRecommander key(query);
+        key.execute();
+        key.response();
+    }
 }
 
 int main()

@@ -1,14 +1,8 @@
 #include "../../include/offline/PageLibPreprocessor.h"
 
-const char* const S_DICT_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/jieba.dict.utf8";
-const char* const S_HMM_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/hmm_model.utf8";
-const char* const S_USER_DICT_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/user.dict.utf8";
-const char* const S_IDF_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/idf.utf8";
-const char* const S_STOP_WORD_PATH = "/home/metaphysic/se/lib/cppjieba-master/dict/stop_words.utf8";
-
-PageLibPreProcessor::PageLibPreProcessor()
-: _jieba(S_DICT_PATH, S_HMM_PATH, S_USER_DICT_PATH)
-, _simhasher(S_DICT_PATH, S_HMM_PATH, S_IDF_PATH, S_STOP_WORD_PATH){
+PageLibPreProcessor::PageLibPreProcessor(SplitTool *tool)
+: _tool(tool)
+, _simhasher(DICT_PATH, HMM_PATH, IDF_PATH, STOP_WORD_PATH){
 }
 
 void PageLibPreProcessor::readInfoFromFile(){
@@ -25,7 +19,7 @@ void PageLibPreProcessor::readInfoFromFile(){
         WebPage web(temp);
         _pageLib.push_back(web);
     }
-    cout << "doc sum: " << _pageLib.size() << endl;
+    cout << "pagelib: " << _pageLib.size() << endl;
 }
 
 void PageLibPreProcessor::cutRedundantPages(){
@@ -49,7 +43,7 @@ void PageLibPreProcessor::cutRedundantPages(){
 }
 
 void PageLibPreProcessor::buildInvertIndexTable(){
-    ifstream ifsStopWords(S_STOP_WORD_PATH);
+    ifstream ifsStopWords(STOP_WORD_PATH);
     unordered_set<string> stopWords;
     vector<string> tmpWords;
     string stopWord, tmpWord;
@@ -59,7 +53,7 @@ void PageLibPreProcessor::buildInvertIndexTable(){
         stopWords.insert(stopWord);
     }
     for (size_t idx = 0; idx < _pageLib.size(); ++idx){
-        _jieba.Cut(_pageLib[idx].getContent(), tmpWords);
+        tmpWords = _tool->cut(_pageLib[idx].getContent());
         unordered_map<string, int> tfmap;
         for (auto & tmp : tmpWords){
             auto res = tfmap.insert({tmp, 1});

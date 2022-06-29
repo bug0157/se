@@ -2,7 +2,6 @@
 #define SE_INCLUDE_OFFICE_PAGELIBPREPROCESSOR_H_
 
 #include "../../lib/simhash-master/include/simhash/Simhasher.hpp"
-#include "../../lib/simhash-master/deps/cppjieba/Jieba.hpp"
 
 #include "../../include/offline/WebPage.h"
 
@@ -12,7 +11,7 @@ using TFMap = vector<unordered_map<string, int>>;
 
 class PageLibPreProcessor{
 public:
-    PageLibPreProcessor();
+    PageLibPreProcessor(SplitTool *tool);
     //void doProcess();              //执行预处理
 
     void readInfoFromFile();       //读取网页库和偏移库；
@@ -38,7 +37,7 @@ private:
     //指纹库
     vector<uint64_t> _simhashValue;
     //分词对象
-    cppjieba::Jieba _jieba;
+    SplitTool* _tool;
     //网页库的容器对象
     vector<WebPage> _pageLib;
     //去重后的网页库

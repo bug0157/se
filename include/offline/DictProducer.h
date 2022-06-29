@@ -9,7 +9,6 @@
 
 using std::pair;
 using std::map;
-using std::unordered_map;
 using std::set;
 
 class DictProducer {
@@ -31,11 +30,10 @@ public:
     void getFiles();                      //获取文件的绝对路径
     void pushDict(const string &word);    //存储某个单词
 private:
-    //vector<string> _files;              //文件路径
-    unordered_map<string,int> _record;//词->下标
+    SplitTool *_cutter;              //分词工具
+    vector<string> _files;              //文件路径
     vector<pair<string,int>> _dict;    //词典->词+频率
     map<string,set<int>> _index;       //索引->词+所有出现过的下标
-    SplitTool *_cutter;              //分词工具
 };
 
 

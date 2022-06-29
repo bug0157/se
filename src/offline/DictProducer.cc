@@ -1,56 +1,89 @@
+#include <dirent.h>
+
 #include <fstream>
 #include <sstream>
-
 
 #include "../../include/offline/tinyxml2.h"
 #include "../../lib/utfcpp-master/source/utf8.h"
 #include "../../include/offline/DictProducer.h"
 
 using namespace tinyxml2;
+using std::cout;
+using std::endl;
+using std::cerr;
 using std::ofstream;
+using std::ifstream;
 using std::ostringstream;
 
-DictProducer::DictProducer(SplitTool *tool)
-: _record()
+//处理中文
+DictProducer::DictProducer(const string& dir, SplitTool *tool)
+: _cutter(tool)
 , _dict()
-, _index()
-,_cutter(tool){
+, _index(){
+    DIR *dirp = opendir(dir.c_str());
+    if(dirp == NULL){
+        perror("opendir");
+        return;
+    }
+    struct dirent *pdirent;
+    while((pdirent = readdir(dirp)) != NULL){
+        string DirName = pdirent->d_name;
+        if(DirName != "." && DirName != ".."){
+            _files.push_back(DirName);
+        }
+    }
+    closedir(dirp);
     buildCnDict();
     buildCnIndex();
 }
 
 void DictProducer::buildCnDict(){
-    std::cout << "start xml prase" << std::endl;
-    XMLDocument xml;
-    xml.LoadFile("../../data/xml/hm.xml");
-    XMLElement *root = xml.RootElement();//获取根结点
-    XMLElement *channel = root->FirstChildElement("channel");
-    XMLElement *item = channel->FirstChildElement("item");
-    string sentence;
-    while (item) {
-        //获取标题
-        //XMLElement *item_title = item->FirstChildElement("title");
-        //获取内容
-        XMLElement *item_content = item->FirstChildElement("description");
-        string fragment = item_content->GetText();
-        sentence += fragment;
-        item = item->NextSiblingElement();
-    }
-    //分词
-    std::cout << "start cut" << std::endl;
-    vector<string> words = _cutter->cut(sentence);
-    for (auto &w_it : words) {
-        auto ex_it = _record.find(w_it);
-        //词已存在，词典频率++
-        if (ex_it != _record.end()) {
-            ++_dict[ex_it->second].second;
+    string text;
+    for(auto &file :_files)
+    {
+        cout << "load " << file << endl;
+        //加载xml文件
+        XMLDocument doc;
+        string filename = "../../data/xml/" + file;
+        int ret = doc.LoadFile(filename.c_str());
+        if(ret != 0){
+            cerr << "load xml file failed" << endl;
         }
-        //词不存在
-        else {
-            _dict.push_back(pair<string,int>(w_it, 1));
-            _record.insert(pair<string,int>(w_it, _dict.size()));
+
+        //遍历结点
+        XMLElement *root = doc.FirstChildElement("rss")->FirstChildElement("channel");
+        XMLElement *node = root->FirstChildElement("item");
+        while(node){
+            //获取标题
+            text += " ";
+            text += node->FirstChildElement("title")->GetText();
+            
+            //获取内容,内容不能为空
+            text += " ";
+            text += node->FirstChildElement("description")->GetText();
+
+            node = node->NextSiblingElement();
         }
     }
+
+    cout << "cut begin" << endl;
+    map<string, int> dict;
+    vector<string> word = _cutter->cut(text);
+    for(auto &it_word : word)
+    {
+        auto it = dict.find(it_word);
+        if(it != dict.end()){
+            it->second ++;
+        }else{
+            dict[it_word] = 1;
+        }
+    }
+
+    for(auto &it : dict)
+    {
+        _dict.push_back(it);
+    }
+    cout << "cut end" << endl;    
 }
 
 void DictProducer::buildCnIndex(){
