@@ -6,11 +6,11 @@
 
 #include "../../lib/simhash-master/deps/cppjieba/Jieba.hpp"
 
-const char* const DICT_PATH = "/home/metaphysic/se/lib/simhash-master/dict/jieba.dict.utf8";
-const char* const HMM_PATH = "/home/metaphysic/se/lib/simhash-master/dict/hmm_model.utf8";
-const char* const USER_DICT_PATH = "/home/metaphysic/se/lib/simhash-master/dict/user.dict.utf8";
-const char* const IDF_PATH = "/home/metaphysic/se/lib/simhash-master/dict/idf.utf8";
-const char* const STOP_WORD_PATH = "/home/metaphysic/se/lib/simhash-master/dict/stop_words.utf8";
+const char* const DICT_PATH = "/home/rootless/se/lib/simhash-master/dict/jieba.dict.utf8";
+const char* const HMM_PATH = "/home/rootless/se/lib/simhash-master/dict/hmm_model.utf8";
+const char* const USER_DICT_PATH = "/home/rootless/se/lib/simhash-master/dict/user.dict.utf8";
+const char* const IDF_PATH = "/home/rootless/se/lib/simhash-master/dict/idf.utf8";
+const char* const STOP_WORD_PATH = "/home/rootless/se/lib/simhash-master/dict/stop_words.utf8";
 
 using std::vector;
 using std::string;

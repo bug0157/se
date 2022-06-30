@@ -22,7 +22,7 @@ void WebPageQuery::loadLib(){
 
 
 void WebPageQuery::loadInvertIdx(){
-    ifstream ifs("/home/metaphysic/se/data/dict/invertIdx.dat");
+    ifstream ifs("/home/rootless/se/data/dict/invertIdx.dat");
     if(!ifs.is_open()){
         cout<<"Open file in loadInvertIdx failed!"<<endl;
     }
@@ -50,7 +50,7 @@ void WebPageQuery::loadInvertIdx(){
 }
 
 void WebPageQuery::loadOffset(){
-    ifstream ifs("/home/metaphysic/se/data/pagelib/newoffset.lib");
+    ifstream ifs("/home/rootless/se/data/pagelib/newoffset.lib");
     if(!ifs.is_open()){
         cout<<"Open file in loadOffset failed!"<<endl;
     }
@@ -74,7 +74,7 @@ void WebPageQuery::loadOffset(){
 }
 
 void WebPageQuery::loadNewpage(){
-    ifstream ifs("/home/metaphysic/se/data/pagelib/newpage.lib");
+    ifstream ifs("/home/rootless/se/data/pagelib/newpage.lib");
     if(!ifs.is_open()){
         cout<<"Open file in loadNewpage failed"<<endl;
     }

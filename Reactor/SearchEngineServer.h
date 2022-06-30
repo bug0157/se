@@ -21,12 +21,14 @@ public:
     }
 
     void process(){
+        std::cout << "process()" << std::endl;
         //业务逻辑
         ProtocolParser::res_t res = _parser.decode(_msg);
         //解包分析任务
         int flag = res._id;
         //关键词推荐业务
         if (1 == flag) {
+            std::cout << res._content[0] << std::endl;
             _keyRecommander.execute(res._content[0]);
             vector<string> res = _keyRecommander.response();
             string ret = _parser.encode(1, res);
@@ -82,6 +84,8 @@ private:
     void onMessage(const TcpConnectionPtr &con, WebPageQuery &webquery){
         //接收数据
         string msg = con->receive();
+        std::cout << msg << std::endl;
+
         if (msg.empty()) {
             std::cout << "invalid msg" << std::endl;
         }

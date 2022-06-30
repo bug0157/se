@@ -32,7 +32,7 @@ void KeyRecommander::execute(const string &query)
 void KeyRecommander::queryIndexTable(const string &query)
 {
     Dictionary *dict = Dictionary::createInstance();
-    dict->init("/home/metaphysic/se/data/dict/");
+    dict->init("/home/rootless//se/data/dict/");
     set<int> lines;
     for(auto it = query.begin(), it2 = query.begin();
         it2 != query.end(); )

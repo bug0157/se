@@ -1,5 +1,6 @@
 #include "../../include/online//KeyRecommander.h"
 
+#if 0
 void test1()
 {
     while (1)
@@ -7,12 +8,14 @@ void test1()
         string query;
         std::cout << "pls input key:";
         std::cin >> query;
-        KeyRecommander key(query);
-        key.execute();
-        key.response();
+        KeyRecommander keyrecommander;
+        keyrecommander.execute(query);
+        vector<string> res = keyrecommander.response();
+        for (auto &it : res) {
+            std::cout << it << std::endl; 
+        }
     }
 }
-#if 0
 int main()
 {
     test1();
