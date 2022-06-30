@@ -5,41 +5,39 @@
 using std::ostringstream;
 
 //构造函数
-KeyRecommander::KeyRecommander(const string &query, const TcpConnectionPtr& conn)
+/* KeyRecommander::KeyRecommander(const string &query, const TcpConnectionPtr& conn)
 : _queryWord(query)
 , _conn(conn)
 , _resultQue()
 {
 
-}
+} */
 
 //构造函数
-KeyRecommander::KeyRecommander(const string &query)
-: _queryWord(query)
-//, _conn()
-, _resultQue()
+KeyRecommander::KeyRecommander()
+: _resultQue()
 {
-    string blanks("\f\v\r\t\n ");
-    _queryWord.erase(0, _queryWord.find_first_not_of(blanks));
-    _queryWord.erase(_queryWord.find_last_not_of(blanks)+1);
+    //string blanks("\f\v\r\t\n ");
+    //query.erase(0, query.find_first_not_of(blanks));
+    //query.erase(query.find_last_not_of(blanks)+1);
 }
 
 //执行查询
-void KeyRecommander::execute()
+void KeyRecommander::execute(const string &query)
 {
-    queryIndexTable();
+    queryIndexTable(query);
 }
 
 //查询索引
-void KeyRecommander::queryIndexTable()
+void KeyRecommander::queryIndexTable(const string &query)
 {
     Dictionary *dict = Dictionary::createInstance();
     dict->init("/home/metaphysic/se/data/dict/");
     set<int> lines;
-    for(auto it = _queryWord.begin(), it2 = _queryWord.begin();
-        it2 != _queryWord.end(); )
+    for(auto it = query.begin(), it2 = query.begin();
+        it2 != query.end(); )
     {
-        utf8::next(it2, _queryWord.end());
+        utf8::next(it2, query.end());
         ostringstream oss;
         while(it < it2){
             oss << *it;
@@ -48,11 +46,11 @@ void KeyRecommander::queryIndexTable()
         set<int> tmp = dict->doQuery(oss.str());
         lines.insert(tmp.begin(), tmp.end());
     }
-    this->statistic(lines);
+    this->statistic(lines, query);
 }
 
 //进行计算
-void KeyRecommander::statistic(set<int> &iset)
+void KeyRecommander::statistic(set<int> &iset, const string &query)
 {
     Dictionary *dict = Dictionary::createInstance();
     for(auto &it : iset)
@@ -61,7 +59,7 @@ void KeyRecommander::statistic(set<int> &iset)
         pair<string, int> word = dict->getDict(it);         
         rest._word = word.first;
         rest._freq = word.second;
-        rest._dist = distance(word.first);
+        rest._dist = distance(word.first, query);
 
         //插入元素
         _resultQue.push(rest);
@@ -73,13 +71,13 @@ void KeyRecommander::statistic(set<int> &iset)
 }
 
 //计算最小编辑距离
-int KeyRecommander::distance(const string &rhs)
+int KeyRecommander::distance(const string &rhs, const string &query)
 {
     vector<string> a1;
-    for(auto it = _queryWord.begin(), it2 = _queryWord.begin();
-        it2 != _queryWord.end(); )
+    for(auto it = query.begin(), it2 = query.begin();
+        it2 != query.end(); )
     {
-        utf8::next(it2, _queryWord.end());
+        utf8::next(it2, query.end());
         ostringstream oss1;
         while(it < it2){
             oss1 << *it;
@@ -137,19 +135,19 @@ int KeyRecommander::distance(const string &rhs)
 }
 
 //响应客户端请求
-string KeyRecommander::response()
+vector<string> KeyRecommander::response()
 {
     string result;
+    vector<string> res;
     if(_resultQue.empty()){
-        result = "NULL";
+        //result = "NULL\n";
+        res.push_back("NULL\n");
     }
 
     while(!_resultQue.empty()){
-        string tmp = result;
-        result = _resultQue.top()._word + "\n" + tmp;
+        string temp = _resultQue.top()._word;
+        res.push_back(temp);
         _resultQue.pop();
     }
-
-    std::cout << "查询结果为：\n" <<result << std::endl;
-    return result;
+    return res;
 }
