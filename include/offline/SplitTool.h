@@ -23,6 +23,7 @@ public:
     SplitTool() = default;
     virtual ~SplitTool() = default;
     virtual vector<string> cut(const string &sentence) = 0;
+    virtual vector<string> cut1(const string &sentence) = 0;
 };
 
 
@@ -31,6 +32,7 @@ public:
     SplitToolCppJiaba(Configuration *conf);
     ~SplitToolCppJiaba() = default;
     vector<string> cut(const string &sentence);
+    vector<string> cut1(const string &sentence);
 
 private:
     Configuration *_conf;

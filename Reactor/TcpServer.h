@@ -7,8 +7,8 @@
 #include <iostream>
 #include <unistd.h>
 
-using std::cout;
-using std::endl;
+//using std::cout;
+//using std::endl;
 
 class TcpServer
 {

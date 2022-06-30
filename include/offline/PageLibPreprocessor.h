@@ -17,7 +17,7 @@ public:
     void readInfoFromFile();       //读取网页库和偏移库；
     void cutRedundantPages();      //去重
     void buildInvertIndexTable();  //创建倒排索引
-    //void storeOnDisk();            //存储到磁盘上
+    void storeOnDisk();            //存储到磁盘上
     //for test
     void showSize() { cout << "newPagelib size:" << _newPageLib.size() << endl; }
     void showIndex(){

@@ -9,10 +9,11 @@ void test(){
     printf("切词工具生成成功\n");
     PageLibPreProcessor plpp(tool);
     plpp.readInfoFromFile();
-    plpp.cutRedundantPages();
-    plpp.showSize();
+    //plpp.cutRedundantPages();
+    //plpp.showSize();
     plpp.buildInvertIndexTable();
-    plpp.showIndex();
+    plpp.storeOnDisk();
+    //plpp.showIndex();
 }
 
 int main (int argc, char *argv[])

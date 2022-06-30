@@ -4,8 +4,9 @@
 
 
 
-WebPage::WebPage(string& doc)
-: _doc(doc){
+WebPage::WebPage(string& doc, SplitTool *sp)
+: _doc(doc)
+, _sp(sp){
     ProcessDoc();
     //WordsHandle();
 }
@@ -32,9 +33,9 @@ string WebPage::getDoc(){
     return _doc;
 }
 
-map<string,int>& WebPage::getWordsMap(){
+/* map<string,int>& WebPage::getWordsMap(){
     return _wordsMap;
-}
+} */
 
 
 
@@ -57,8 +58,8 @@ void WebPage::ProcessDoc(){
 }
 
 
-void WebPage::WordsHandle(){
-    vector<string> vec = _tool->cut(_docContent);
+/* void WebPage::WordsHandle(){
+    vector<string> vec = _sp->cut(_docContent);
 
     for(vector<string>::iterator it = vec.begin();
             it!=vec.end();++it){
@@ -72,7 +73,7 @@ void WebPage::WordsHandle(){
         }
     }
 
-}
+} */
 
 
 void WebPage::show(){
@@ -81,7 +82,7 @@ void WebPage::show(){
     cout<<_docTitle<<endl;
     cout<<_docContent<<endl;
 
-    for(auto&it:_wordsMap){
-        cout<<it.first<<" "<<it.second<<endl;
-    }
+    //for(auto&it:_wordsMap){
+    //    cout<<it.first<<" "<<it.second<<endl;
+    //}
 }

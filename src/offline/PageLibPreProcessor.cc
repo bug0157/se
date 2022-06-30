@@ -1,5 +1,7 @@
 #include "../../include/offline/PageLibPreprocessor.h"
 
+#include <fstream>
+
 PageLibPreProcessor::PageLibPreProcessor(SplitTool *tool)
 : _tool(tool)
 , _simhasher(DICT_PATH, HMM_PATH, IDF_PATH, STOP_WORD_PATH){
@@ -16,7 +18,7 @@ void PageLibPreProcessor::readInfoFromFile(){
     //读取每行，创建成webpage对象，存入vector
     string temp;
     while (getline(ifs, temp)) {
-        WebPage web(temp);
+        WebPage web(temp, _tool);
         _pageLib.push_back(web);
     }
     cout << "pagelib: " << _pageLib.size() << endl;
@@ -101,8 +103,21 @@ void PageLibPreProcessor::buildInvertIndexTable(){
     }
 }
 
-/* void PageLibPreProcessor::storeOnDisk(){
-    string pagelib_path = "";
-    string offsetlib = "";
+void PageLibPreProcessor::storeOnDisk(){
+    string invertIndex_path = "../../data/dict/invertIdx.dat";
+    std::ofstream ofs(invertIndex_path);
+    if (!ofs.is_open()) {
+        perror("invertIdx.dat open fail");
+        return;
+    }
 
-} */
+    for (auto &map_it : _invertIndexTable) {
+        ofs << map_it.first << " ";
+        for (auto &set_it : map_it.second) {
+            ofs << set_it.first << " "
+                << set_it.second << " ";
+        }
+        ofs << endl;
+    }
+    ofs.close();
+}

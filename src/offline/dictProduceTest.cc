@@ -1,7 +1,7 @@
 #include "../../include/offline/DictProducer.h"
 #include "../../include/Configuration.h"
 
-#if 1
+#if 0
 void test(){
     Configuration *conf = Configuration::getInstance(); 
     SplitTool *cutter = new SplitToolCppJiaba(conf);
