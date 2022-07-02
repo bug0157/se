@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "Socket.hpp"
 #include "SocketIO.hpp"
 #include "InetAddress.hpp"
@@ -18,7 +19,7 @@ public:
         return string(buf);
     }
     void sendMessage(const string &msg){
-        _sockio.writen(msg.c_str(), msg.size());
+        int ret = _sockio.writen(msg.c_str(), msg.size());
     }
 
     int connect() const{

@@ -137,17 +137,22 @@ int KeyRecommander::distance(const string &rhs, const string &query)
 //响应客户端请求
 vector<string> KeyRecommander::response()
 {
-    string result;
-    vector<string> res;
+    vector<string> result;
     if(_resultQue.empty()){
         //result = "NULL\n";
-        res.push_back("NULL\n");
+        result.push_back("没有查询结果，换一个词试试捏！");
+        return result;
     }
 
-    while(!_resultQue.empty()){
-        string temp = _resultQue.top()._word;
-        res.push_back(temp);
+    vector<string> temp;
+    while (!_resultQue.empty()) {
+        temp.push_back(_resultQue.top()._word);
         _resultQue.pop();
     }
-    return res;
+    
+    while (!temp.empty()) {
+        result.push_back(temp.back());
+        temp.pop_back();
+    }
+    return result;
 }

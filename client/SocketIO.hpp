@@ -73,7 +73,6 @@ public:
                         readn(pstr, sz);
                         pstr += sz;
                         *pstr = '\0';
-
                         return total + sz;
                     }
                 }
@@ -115,7 +114,8 @@ public:
                 left -= ret;
             }
         }
-
+        const char *blank = "\n";
+        write(_fd, blank, 1);
         return len - left;
     }
 

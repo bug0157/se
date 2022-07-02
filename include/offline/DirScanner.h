@@ -16,15 +16,8 @@ using std::vector;
 class DirScanner 
 {
 public:
-    DirScanner()
-    {
-
-    }
-
-    vector<string> files() 
-    {
-        return this->_files;
-    }
+    DirScanner(){}
+    vector<string> files() { return this->_files; }
 
     void traverse(const string &dirname)
     {

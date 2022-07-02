@@ -1,17 +1,16 @@
-#ifndef __WEBPAGEQUERY_HPP__
-#define __WEBPAGEQUERY_HPP__
+#ifndef SE_INCLUDE_ONLINE_WEBPAGEQUERY_H_
+#define SE_INCLUDE_ONLINE_WEBPAGEQUERY_H_
+
 
 #include "../offline/WebPage.h"
-#include "../online/retClass.h"
 #include "../offline/SplitTool.h"
+#include "retClass.h"
 
-#include <functional>
 #include <unordered_map>
 #include <utility>
 #include <set>
 #include <string>
 #include <fstream>
-#include <vector>
 
 
 using std::unordered_map;
@@ -31,14 +30,13 @@ public:
 
     string doQuery(const string& query);
     vector<Retclass> doQueryRet(const string& query); 
-    vector<string> doQueryRetString(const string& query);
 private:
     void WordHandle(const string&,vector<string>&,map<string,int>&);//切词处理
     void WordWeightCount(vector<string>&,map<string,int>&,vector<double>&);//要查询的语句每个单词的权重计算函数
     int offsetWordQuery(vector<string>&,map<int,vector<double>>&);//返回值作为标志，为-1表示没有结果
-    void cosCountQuery(map<double,int,greater<double>>&,vector<double>&,map<int,vector<double>>&);
+    void cosCountQuery(map<double,int>&,vector<double>&,map<int,vector<double>>&);
    //计算余弦值 
-    string resultHandle(map<double,int,greater<double>>&,string);//结果分割函数，包括摘要自动生成
+    string resultHandle(map<double,int>&,string);//结果分割函数，包括摘要自动生成
 
     void loadLib();//将invertIdx.dat,newpage.lib,newoffset.lib的文件加载到成员数据中
                    //分开三个函数来加载文件内容,loadLib会调用下面三个函数
@@ -59,15 +57,4 @@ private:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-#endif
+#endif // !SE_INCLUDE_ONLINE_WEBPAGEQUERY_H_

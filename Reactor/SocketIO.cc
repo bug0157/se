@@ -3,6 +3,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <errno.h>
+#include <iostream>
 #include <stdio.h>
 
 SocketIO::SocketIO(int fd)
@@ -23,6 +24,7 @@ int SocketIO::readn(char *buf, int len)
 
     while(left > 0)
     {
+        std::cout << "left" << left << std::endl;
         ret = read(_fd, pstr, left);
         if(-1 == ret && errno == EINTR)
         {
@@ -125,6 +127,8 @@ int SocketIO::writen(const char *buf, int len)
             left -= ret;
         }
     }
+    const char* blank = "\n";
+    write(_fd, blank, 1);
 
     return len - left;
 }

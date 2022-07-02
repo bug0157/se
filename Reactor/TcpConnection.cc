@@ -40,6 +40,7 @@ void TcpConnection::sendInLoop(const string &msg)
 string TcpConnection::receive()
 {
     char buff[65535] = {0};
+    cout << "111" << endl;
     _sockIO.readLine(buff, sizeof(buff));
 
     return string(buff);

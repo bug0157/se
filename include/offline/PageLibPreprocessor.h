@@ -20,16 +20,6 @@ public:
     void storeOnDisk();            //存储到磁盘上
     //for test
     void showSize() { cout << "newPagelib size:" << _newPageLib.size() << endl; }
-    void showIndex(){
-        for (auto &map_it : _invertIndexTable) {
-            cout << map_it.first << " ";
-            for (auto &set_it : map_it.second) {
-                cout << set_it.first << " "
-                     << set_it.second << " ";
-            }
-            cout << endl;
-        }
-    }
 
 private:
 

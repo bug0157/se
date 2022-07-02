@@ -17,8 +17,8 @@ public:
     DictProducer(SplitTool *cutter);//处理中文
     DictProducer(const string &dir, SplitTool *cutter);//处理中文
 
-    //void buildEnDict();
-    //void buildEnIndex();
+    void buildEnDict();
+    void buildEnIndex();
     void buildCnDict();
     void buildCnIndex();
     void storeDict(const char * filepath);

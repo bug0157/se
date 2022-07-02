@@ -30,13 +30,16 @@ public:
         if (1 == flag) {
             std::cout << res._content[0] << std::endl;
             _keyRecommander.execute(res._content[0]);
-            vector<string> res = _keyRecommander.response();
-            string ret = _parser.encode(1, res);
+            vector<string> result = _keyRecommander.response();
+            string ret = _parser.encode(1, result);
             _con->sendInLoop(ret);
         }
         //网页查询业务
         if (2 == flag) {
-            string ret = _webSearcher.doQuery(_msg);  
+            std::cout << res._content[0] << std::endl;
+            vector<string> result = _webSearcher.doQueryRetString(res._content[0]);  
+            std::cout << result.size() << std::endl;
+            string ret = _parser.encode(2, result);
             _con->sendInLoop(ret);
         }
     }
@@ -83,9 +86,10 @@ private:
 
     void onMessage(const TcpConnectionPtr &con, WebPageQuery &webquery){
         //接收数据
+        //cout << "111" << endl;
         string msg = con->receive();
-        std::cout << msg << std::endl;
-
+        cout << msg << endl;
+        //msg.erase(msg.end()-1);
         if (msg.empty()) {
             std::cout << "invalid msg" << std::endl;
         }

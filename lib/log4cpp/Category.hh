@@ -10,7 +10,7 @@
 #ifndef _LOG4CPP_CATEGORY_HH
 #define _LOG4CPP_CATEGORY_HH
 
-#include <log4cpp/Portability.hh>
+#include "Portability.hh"
 #include <log4cpp/Appender.hh>
 #include <log4cpp/LoggingEvent.hh>
 #include <log4cpp/Priority.hh>
